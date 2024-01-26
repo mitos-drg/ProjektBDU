@@ -1,0 +1,14 @@
+# .gitignore file for the project for databases and webservices
+
+# Build result
+site/
+_site/
+*.tar.gz
+cgi-bin/
+
+# Python virtual environment and IDE
+venv/
+.idea/
+
+# Project secrets
+.pgpass
