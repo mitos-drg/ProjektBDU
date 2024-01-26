@@ -1,0 +1,21 @@
+<form class="w-75 m-auto text-center" method="post" action="login.py">
+    <img class="mb-4 mx-auto" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Zaloguj się</h1>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="user" id="user" required pattern="\d{6}">
+        <label for="user">Login</label>
+    </div>
+    <div class="form-floating mb-1">
+        <input type="password" class="form-control" name="password" id="password" required maxlength="32">
+        <label for="password">Hasło</label>
+    </div>
+
+    {% if site.error and site.error != '' %}
+        <div class="form-text text-danger">
+            {{ site.error }}
+        </div>
+    {% endif %}
+
+    <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Zaloguj</button>
+</form>

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">
+        Wybory Samorządowe
+    </h1>
+
+    <!-- Admin stuff -->
+    {% if user.is_admin %}
+        <div class="row rounded border my-2 p-4 justify-content-center">
+            <div class="col col-md-7 vstack gap-4">
+                <h3>Opcje Komisji</h3>
+                <a class="btn btn-primary" href="admin.py?action=election">Dodaj nowe wybory</a>
+                <a class="btn btn-primary" href="admin.py?action=user">Dodaj użytkownika</a>
+                <a class="btn btn-primary" href="admin.py?action=list">Wyświetl listę wyborców</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- List current elections -->
+    {% for election in elections %}
+        <div class="row rounded border border-primary my-4 p-3">
+            <div class="col-md-7 d-flex flex-column justify-content-center">
+                <h2 class="text-center text-decoration-underline mx-auto mb-4">{{ election.name }}</h2>
+                {% if election.is_nominating %}
+                    {% if not user.is_admin %}
+                        <a class="btn btn-primary my-1 w-50 mx-auto" href="nominate-view.py?election={{ election.id }}">Zgłoś kandydatów</a>
+                    {% else %}
+                        <a class="btn btn-primary my-1 w-50 mx-auto disabled">Zgłoś kandydatów</a>
+                    {% endif %}
+                {% endif %}
+                {% if election.is_voting %}
+                    {% if election.voted or user.is_admin %}
+                        <a class="btn btn-primary my-1 w-50 mx-auto disabled">Głosuj</a>
+                    {% else %}
+                        <a class="btn btn-primary my-1 w-50 mx-auto" href="vote-view.py?election={{ election.id }}">Głosuj</a>
+                    {% endif %}
+                {% endif %}
+                {% if election.is_public or user.is_admin %}
+                    <a class="btn btn-primary my-1 w-50 mx-auto"
+                       href="election-view.py?election={{ election.id }}&public={{ election.is_public }}&name={{ election.name_url }}&closed={{ election.is_voting }}&seats={{ election.seats }}">
+                        Zobacz wyniki
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-md-5 border-start px-5">
+                <p class="">
+                    <span class="text-secondary">Termin zgłaszania kandydatów</span><br/>
+                    {{ election.nominating }}
+                </p>
+                <p class="">
+                    <span class="text-secondary">Rozpoczęcie głosowania</span><br/>
+                    {{ election.start }}
+                </p>
+                <p class="">
+                    <span class="text-secondary">Zakończenie głosowania</span><br/>
+                    {{ election.end }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand bg-body-tertiary sticky-top" aria-label="navbar">
+    <div class="container">
+        <a class="navbar-brand col-3 me-0" href="#">
+            <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30"
+                 height="24" class="d-inline-block align-text-top">
+            Wybory samorządowe
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
+                aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse d-flex" id="main-navbar">
+            <ul class="navbar-nav col-6 justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="main-view.py">Strona Główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="elections.py">Wybory</a>
+                </li>
+                {% if user.id != '' %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="logout.py">Logout</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="row justify-content-center">
+        <div class="col col-md-7">
+            <h1 class="text-center">Lista wyborców</h1>
+            <ul class="list-group list-group-flush list-group-numbered">
+                {% for voter in voters %}
+                    <li class="list-group-item">
+                    {{ voter.id }} <span class="text-primary text-decorations-underline">{{ voter.surname }}</span>,
+                    {{ voter.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

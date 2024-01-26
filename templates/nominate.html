@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="row justify-content-center">
+        <form class="col col-md-7 mx-auto" method="post" action="nominate.py">
+            <input type="hidden" name="election" value="{{ election.id }}">
+            <div class="mb-3">
+                <label for="nominee">Indeks kandydata(-ki)</label>
+                <input type="text" class="form-control" name="nominee" id="nominee" required pattern="\d{6}">
+            </div>
+            <button class="btn btn-outline-primary">Zgłoś</button>
+        </form>
+    </div>
+{% endblock %}

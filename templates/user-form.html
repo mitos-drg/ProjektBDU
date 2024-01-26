@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <form class="border-primary border" method="post" action="add-user.py">
+            <label for="indeks" class="form-label">Numer indeksu</label>
+            <input type="text" class="form-control" name="index" id="indeks" required pattern="\d{6}">
+
+            <label for="name" class="form-label">Imię</label>
+            <input type="text" class="form-control" name="name" id="name" required maxlength="24">
+            <label for="surname" class="form-label">Nazwisko</label>
+            <input type="text" class="form-control" name="surname" id="surname" required maxlength="48">
+            <label for="password" class="form-label">Hasło</label>
+            <input type="text" class="form-control" name="password" id="password" required maxlength="24">
+
+            <button type="submit" class="btn btn-outline-primary m-3">Dodaj użytkownika</button>
+            <button type="reset" class="btn btn-outline-danger m-3">Resetuj</button>
+        </form>
+    </div>
+{% endblock %}

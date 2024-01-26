@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col col-md-8 mx-auto">
+        <div class="alert alert-info">
+            <h2>Read me</h2>
+            <p>
+                To jest projekt zaliczeniowy na przedmiot "Bazy Danych i Usługi Sieciowe" z semestru zimowego 2023/2024.
+                Jest to aplikacja internetowa napisana w Pythonie (jako seria skryptów cgi) i wykorzystująca bazę danych
+                PostgreSQL.
+            </p>
+            <h4>Instrukcja użytkowania</h4>
+            <p>
+                Komisja wyborcza jest użytkownikiem o numerze indeksu <span class="text-primary">000000</span> i haśle
+                <span class="text-primary">Admin1</span>. Do tego w bazie są (będą, jak ich dodam - odwiedzający może
+                wykonać to zadanie samodzielnie, jeśli nie może się doczekać) zwykli użytkownicy z numerami indeksów
+                postaci <span class="text-primary">1000XX</span>, gdzie XX jest numerem użytkownika - ich hasło powinno
+                być <span class="text-primary">hXXo</span>.
+            </p>
+            <p>
+                Aby rozpocząć interakcje z aplikacją należy się zalogować. Po zalogowaniu nastąpi przekierowanie do
+                głównego widoku na obecnie dostępne w systemie wybory. Można do niego również przejść klikajac na zakładkę
+                "Wybory" w menu (należy być zalogowanym!).
+            </p>
+        </div>
+        <div class="row my-2">
+            <h3 class="text-center">Diagram ERD</h3>
+            <img class="img-fluid" src="assets/wybory.png" alt="diagram ERD dla modelu danych projektu">
+            <p>
+                Diagram ERD modelu danych projektu systemu obsługi wyborów do samorządu.
+            </p>
+        </div>
+        <p>
+            Oraz skrypt zakładający odpowiednie tabele w bazie danych:
+            <a class="btn btn-primary" href="assets/wybory.sql">wybory.sql</a>.
+        </p>
+    </div>
+    {% if user.id == '' %}
+        <div class="col col-md-4">
+            {% include "login-form.html" %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

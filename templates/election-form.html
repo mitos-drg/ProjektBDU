@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <form class="border-primary border" method="post" action="add-election.py">
+            <label for="name" class="form-label">Nazwa</label>
+            <input type="text" class="form-control" name="name" id="name" required maxlength="32">
+
+            <label for="seats" class="form-label">Liczba posad</label>
+            <input type="number" class="form-control" name="seats" id="seats" required>
+
+            <label for="nominating" class="form-label">Koniec zgłaszania kandydatów</label>
+            <input type="datetime-local" class="form-control" name="nominating" id="nominating" required>
+            <label for="start" class="form-label">Początek głosowania</label>
+            <input type="datetime-local" class="form-control" name="start" id="start" required>
+            <label for="ends" class="form-label">Koniec głosowania</label>
+            <input type="datetime-local" class="form-control" name="ends" id="ends" required>
+
+            <button type="submit" class="btn btn-outline-primary m-3">Dodaj wybory</button>
+            <button type="reset" class="btn btn-outline-danger m-3">Resetuj</button>
+        </form>
+    </div>
+{% endblock %}
