@@ -22,7 +22,6 @@ if user['id'] == '':
 # Get election id
 election_id = utils.get_get_data().get('election', [None])[0]
 
-# Get elections candidates from database
 # Connect to the database
 try:
     with open(".pgpass", "r") as pgfile:

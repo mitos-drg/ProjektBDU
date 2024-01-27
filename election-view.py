@@ -19,13 +19,14 @@ if user['id'] == '':
     print(temp.render(error="401 Unauthorized", description="Zaloguj się, aby wyświetlić zawartość."))
     exit(0)
 
-# Get election id
+# Fill variables from GET string data
 election_id = utils.get_get_data().get('election', [None])[0]
 election_name = utils.get_get_data().get('name', [None])[0]
 is_public = utils.get_get_data().get('public', [False])[0]
 is_closed = utils.get_get_data().get('closed', [False])[0]
 seats = utils.get_get_data().get('seats', [1])[0]
 
+# If there is invalid election id or name throw 404
 if election_id is None or election_name is None:
     print("Status: 404 Page Not Found")
     print("Content-Type: text/html\n")

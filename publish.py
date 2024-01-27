@@ -6,6 +6,7 @@ import psycopg2 as psql
 from os import environ
 import app_utilities as utils
 
+# Acquire psycopg2 unique violation error class
 UniqueViolation = psql.errors.lookup('23505')
 
 user = utils.get_auth_cookie().get('user', '')
@@ -17,9 +18,10 @@ if user != '000000':
     print("A gdzie mnie tu szperasz?")
     exit(0)
 
+# Set election id to handy variable
 election_id = utils.get_get_data().get("election", [''])[0]
 
-# Add new nominee to the database
+# Connect to the database
 try:
     with open(".pgpass", "r") as pgfile:
         pgpass = pgfile.read()
@@ -30,6 +32,7 @@ except:
     print("Error occurred while connecting to the database.")
     exit(0)
 
+# Make elections public and count votes
 with connection.cursor() as cursor:
     try:
         # Set elections status to public
@@ -61,6 +64,5 @@ connection.close()
 
 # Redirect client to the actual application
 print("Status: 303 See Other")
-# print(f"Set-Cookie: password=")
 print(f"Location: elections.py\n")
 print("You shouldn't see this...")

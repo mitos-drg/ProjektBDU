@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 import app_utilities as utils
 import psycopg2 as psql
 
-# Get authorization info
+# Get authorization info from cookie
 user = utils.get_auth_cookie()
 
 # Load jinja templates environment
@@ -24,6 +24,7 @@ if user['id'] != '000000':
 print("Status: 200 OK")
 print("Content-type: text/html\n")
 
+# Check which action to perform
 action = utils.get_get_data().get('action', [None])[0]
 
 # Render templated site
@@ -33,10 +34,12 @@ if action == "election":
 elif action == "user":
     template = env.get_template("user-form.html")
 elif action == "list":
+    # Connect to the database
     with open(".pgpass", "r") as pgfile:
         pgpass = pgfile.read()
     connection = psql.connect(pgpass)
 
+    # Read all users from the database except voting committee
     with connection.cursor() as cursor:
         try:
             cursor.execute("SELECT * FROM VotersAPI WHERE index != '000000'")
@@ -55,9 +58,13 @@ elif action == "list":
             print("Content-type: text/html\n")
             print(error)
     template = env.get_template("user-list.html")
+
+    # Close connection
+    connection.close()
 else:
     template = env.get_template("error.html")
 
+# Prepare site data and render template
 data = {
     'user': user,
     'error': "404 Page Does not Exist",

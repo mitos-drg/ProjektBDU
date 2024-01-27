@@ -5,6 +5,7 @@ import urllib.parse
 import psycopg2 as psql
 from os import environ
 
+# Acquire psycopg2 UniqueViolation error
 UniqueViolation = psql.errors.lookup('23505')
 
 # Get user data from form POST request
@@ -18,17 +19,19 @@ else:
     print("A gdzie mnie tu szperasz?")
     exit(0)
 
+# Fill data into variables
 election_id = data.get("election", [''])[0]
 user = data.get("user", [''])[0]
 votes = data.get("votes", [])
 
+# If user didn't vote return early
 if not votes:
     print("Status: 303 See Other")
     print(f"Location: elections.py\n")
     print("You shouldn't see this...")
     exit(0)
 
-# Add new nominee to the database
+# Connect to the database
 try:
     with open(".pgpass", "r") as pgfile:
         pgpass = pgfile.read()
@@ -39,6 +42,7 @@ except:
     print("Error occurred while connecting to the database.")
     exit(0)
 
+# Add new vote into database
 with connection.cursor() as cursor:
     try:
         query = "INSERT INTO VotesAPI VALUES (%s, %s, %s)"
@@ -56,10 +60,10 @@ with connection.cursor() as cursor:
     except UniqueViolation:
         print("Ni mo, nie głosujemy więcej niż raz!")
 
+# Close connection
 connection.close()
 
 # Redirect client to the actual application
 print("Status: 303 See Other")
-# print(f"Set-Cookie: password=")
 print(f"Location: elections.py\n")
 print("You shouldn't see this...")

@@ -29,16 +29,18 @@ def login_error(error: str):
     exit(0)
 
 
+# Fill data into variables and decide on admin privileges
 username = data.get("user", [''])[0]
 password = data.get("password", [''])[0]
 is_admin = False
 if username == '000000':
     is_admin = True
 
+# Check forms errors
 if username == '' or password == '':
     login_error("Nieprawidłowy login lub hasło")
 
-# Connect to the database and get user password
+# Connect to the database
 result = None
 try:
     with open(".pgpass", "r") as pgfile:
@@ -50,6 +52,7 @@ except:
     print("Error occurred while connecting to the database.")
     exit(0)
 
+# Try to find user in the database
 with connection.cursor() as cursor:
     try:
         # Get user password
@@ -61,6 +64,7 @@ with connection.cursor() as cursor:
         print(error)
         exit(0)
 
+# Close connection
 connection.close()
 
 # Check user password
